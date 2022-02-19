@@ -16,11 +16,18 @@ def index():
 
 @app.route('/showSummary', methods=['POST'])
 def showSummary():
-    club = [club for club in clubs if club['email'] == request.form['email']][0]
-    return render_template('welcome.html',
-                           title="Summary | GUDLFT Registration",
-                           club=club,
-                           competitions=competitions)
+    club = [club for club in clubs if club['email'] == request.form['email']]
+    if club:
+        if len(club) > 1:
+            flash("Email must be unique.", 'danger')
+            return render_template('index.html')
+        club = club[0]
+        return render_template('welcome.html',
+                               title="Summary | GUDLFT Registration",
+                               club=club,
+                               competitions=competitions)
+    flash("Sorry, that email wasn't found.", "danger")
+    return render_template('index.html')
 
 
 @app.route('/book/<competition>/<club>')
@@ -28,7 +35,10 @@ def book(competition, club):
     foundClub = [c for c in clubs if c['name'] == club][0]
     foundCompetition = [c for c in competitions if c['name'] == competition][0]
     if foundClub and foundCompetition:
-        return render_template('booking.html', title=f"Booking for {foundCompetition['name']} || GUDLFT", club=foundClub, competition=foundCompetition)
+        return render_template('booking.html',
+                               title=f"Booking for {foundCompetition['name']} || GUDLFT",
+                               club=foundClub,
+                               competition=foundCompetition)
     else:
         flash("Something went wrong-please try again", "danger")
         return render_template('welcome.html', club=club, competitions=competitions)
