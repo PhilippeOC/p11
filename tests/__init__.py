@@ -11,4 +11,11 @@
     alors le message: "Sorry, that email wasn't found." s'affiche.
     - S'il existe plusieurs clubs avec le même email alors le message "Email must be unique." s'affiche.
 
+*** fichier : test_points_allowed.py
+    2 tests :
+    - Lors de la réservation, si la demande du nombre de places est inférieure au nombre de points disponibles,
+    alors le message 'Great-booking complete!' s'affiche.
+    - Lors de la réservation, si la demande du nombre de places est supérieure au nombre de points disponibles,
+    alors le message 'You can't redeem more points than available.' s'affiche.
+
 """

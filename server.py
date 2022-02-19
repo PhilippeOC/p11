@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect, flash, url_for
 
+from constants import PROPORTION_PLACES_POINTS
 from utilities import loadClubs, loadCompetitions
 
 app = Flask(__name__)
@@ -44,14 +45,39 @@ def book(competition, club):
         return render_template('welcome.html', club=club, competitions=competitions)
 
 
+# @app.route('/purchasePlaces', methods=['POST'])
+# def purchasePlaces():
+#     competition = [c for c in competitions if c['name'] == request.form['competition']][0]
+#     club = [c for c in clubs if c['name'] == request.form['club']][0]
+#     placesRequired = int(request.form['places'])
+#     competition['numberOfPlaces'] = int(competition['numberOfPlaces'])-placesRequired
+#     flash('Great-booking complete!', "success")
+#     return render_template('welcome.html', title="Summary | GUDLFT Registration", club=club,
+# competitions=competitions)
+
+
 @app.route('/purchasePlaces', methods=['POST'])
 def purchasePlaces():
     competition = [c for c in competitions if c['name'] == request.form['competition']][0]
     club = [c for c in clubs if c['name'] == request.form['club']][0]
     placesRequired = int(request.form['places'])
-    competition['numberOfPlaces'] = int(competition['numberOfPlaces'])-placesRequired
-    flash('Great-booking complete!', "success")
-    return render_template('welcome.html', title="Summary | GUDLFT Registration", club=club, competitions=competitions)
+    numberOfPlaces = int(competition['numberOfPlaces'])
+
+    numberOfPlacesAvailable = numberOfPlaces-placesRequired
+    pointsAvailable = int(club['points']) - placesRequired * PROPORTION_PLACES_POINTS
+
+    if numberOfPlacesAvailable >= 0 and pointsAvailable >= 0:
+        competition['numberOfPlaces'] = numberOfPlacesAvailable
+        flash('Great-booking complete!', 'success')
+        return render_template('welcome.html',
+                               title="Summary | GUDLFT Registration",
+                               club=club,
+                               competitions=competitions)
+    flash("You can't redeem more points than available.", 'danger')
+    return render_template('booking.html',
+                           title=f"Booking for {competition['name']} || GUDLFT",
+                           competition=competition,
+                           club=club)
 
 
 # TODO: Add route for points display
