@@ -18,4 +18,12 @@
     - Lors de la réservation, si la demande du nombre de places est supérieure au nombre de points disponibles,
     alors le message 'You can't redeem more points than available.' s'affiche.
 
+
+*** fichier : test_places_less_than_12.py
+    2 tests :
+    - Si la demande de réservation est de moins de 12 places elle est effectuée et
+    le message 'Great-booking complete!' s'affiche.
+    - Si la demande de réservation est de plus de 12 places elle n'est pas effectuée et
+    le message d'alert 'You can't request more than 12 places.' s'affiche.
+
 """
