@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, redirect, flash, url_for
 
 from constants import PROPORTION_PLACES_POINTS, PLACES_MAX
-from utilities import loadClubs, loadCompetitions, render_template_booking, render_template_welcome
+from utilities import loadClubs, loadCompetitions, render_template_booking, render_template_welcome, check_valid_date
 
 app = Flask(__name__)
 app.secret_key = 'something_special'
@@ -23,6 +23,8 @@ def showSummary():
             flash("Email must be unique.", 'danger')
             return render_template('index.html')
         club = club[0]
+        for competition in competitions:
+            check_valid_date(competition)
         return render_template_welcome(competitions, club)
     flash("Sorry, that email wasn't found.", "danger")
     return render_template('index.html', title="GUDLFT Registration")
@@ -45,9 +47,11 @@ def purchasePlaces():
     club = [c for c in clubs if c['name'] == request.form['club']][0]
     placesRequired = int(request.form['places'])
     numberOfPlaces = int(competition['numberOfPlaces'])
+
     if placesRequired > PLACES_MAX:
         flash(f"You can't request more than {PLACES_MAX} places.", 'danger')
         return render_template_booking(competition, club)
+
     if numberOfPlaces <= 0:
         return render_template_welcome(competitions, club)
     numberOfPlacesAvailable = numberOfPlaces-placesRequired

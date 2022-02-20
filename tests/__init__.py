@@ -34,4 +34,10 @@
     - Lorsque le concours est complet, le lien 'Book Places' est remplacé par le message
     'This contest is full'
 
+
+*** fichier : test_competitions_dates.py
+    2 tests :
+    - Lorsque la date de la compétition est passée, le lien 'Book Places' est remplacé par
+    le message 'Past competition'
+    - Lorsque la date de la compétition est à venir, le lien 'Book Places' apparait sur la page
 """

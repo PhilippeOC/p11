@@ -1,6 +1,9 @@
 import json
 from flask import render_template
 
+from datetime import datetime
+from constants import ACTUAL_DATE_TODAY
+
 
 def loadClubs():
     with open('clubs.json') as c:
@@ -26,3 +29,14 @@ def render_template_welcome(competitions, club):
                            title="Summary | GUDLFT Registration",
                            club=club,
                            competitions=competitions)
+
+
+def check_valid_date(competition):
+    """
+        competition['valid_date'] = True si la date de la compétition est à venir
+        Pour tester l'IHM, si ACTUAL_DATE_TODAY est fixée à False (voir constant.py),
+        une date antérieure à la date actuelle est utilisée.
+    """
+    today = datetime.now() if ACTUAL_DATE_TODAY else datetime.strptime("2010-04-27 10:00:00", '%Y-%m-%d %H:%M:%S')
+    competition_date = datetime.strptime(competition['date'], '%Y-%m-%d %H:%M:%S')
+    competition['valid_date'] = today < competition_date
