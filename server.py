@@ -24,10 +24,6 @@ def showSummary():
             return render_template('index.html')
         club = club[0]
         return render_template_welcome(competitions, club)
-        # return render_template('welcome.html',
-        #                        title="Summary | GUDLFT Registration",
-        #                        club=club,
-        #                        competitions=competitions)
     flash("Sorry, that email wasn't found.", "danger")
     return render_template('index.html', title="GUDLFT Registration")
 
@@ -38,14 +34,9 @@ def book(competition, club):
     foundCompetition = [c for c in competitions if c['name'] == competition][0]
     if foundClub and foundCompetition:
         return render_template_booking(foundCompetition, foundClub)
-        # return render_template('booking.html',
-        #                        title=f"Booking for {foundCompetition['name']} || GUDLFT",
-        #                        club=foundClub,
-        #                        competition=foundCompetition)
     else:
         flash("Something went wrong-please try again", "danger")
         return render_template_welcome(competitions, club)
-        # return render_template('welcome.html', club=club, competitions=competitions)
 
 
 @app.route('/purchasePlaces', methods=['POST'])
@@ -57,28 +48,19 @@ def purchasePlaces():
     if placesRequired > PLACES_MAX:
         flash(f"You can't request more than {PLACES_MAX} places.", 'danger')
         return render_template_booking(competition, club)
-        # return render_template('booking.html',
-        #                        title=f"Booking for {competition['name']} || GUDLFT",
-        #                        competition=competition,
-        #                        club=club)
+    if numberOfPlaces <= 0:
+        return render_template_welcome(competitions, club)
     numberOfPlacesAvailable = numberOfPlaces-placesRequired
     pointsAvailable = int(club['points']) - placesRequired * PROPORTION_PLACES_POINTS
 
     if numberOfPlacesAvailable >= 0 and pointsAvailable >= 0:
         competition['numberOfPlaces'] = numberOfPlacesAvailable
+        club['points'] = pointsAvailable
         flash('Great-booking complete!', 'success')
         return render_template_welcome(competitions, club)
-        # return render_template('welcome.html',
-        #                        title="Summary | GUDLFT Registration",
-        #                        club=club,
-        #                        competitions=competitions)
+
     flash("You can't redeem more points than available.", 'danger')
     return render_template_booking(competition, club)
-    # return render_template('booking.html',
-    #                        title=f"Booking for {competition['name']} || GUDLFT",
-    #                        competition=competition,
-    #                        club=club)
-
 
 # TODO: Add route for points display
 

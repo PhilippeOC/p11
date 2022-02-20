@@ -13,10 +13,10 @@
 
 *** fichier : test_points_allowed.py
     2 tests :
-    - Lors de la réservation, si la demande du nombre de places est inférieure au nombre de points disponibles,
-    alors le message 'Great-booking complete!' s'affiche.
-    - Lors de la réservation, si la demande du nombre de places est supérieure au nombre de points disponibles,
-    alors le message 'You can't redeem more points than available.' s'affiche.
+    - Lors de la réservation, si la demande du nombre de places est inférieure au nombre de points
+    disponibles, alors le message 'Great-booking complete!' s'affiche.
+    - Lors de la réservation, si la demande du nombre de places est supérieure au nombre de points
+    disponibles, alors le message 'You can't redeem more points than available.' s'affiche.
 
 
 *** fichier : test_places_less_than_12.py
@@ -25,5 +25,13 @@
     le message 'Great-booking complete!' s'affiche.
     - Si la demande de réservation est de plus de 12 places elle n'est pas effectuée et
     le message d'alert 'You can't request more than 12 places.' s'affiche.
+
+
+*** fichier : test_point_updated.py
+    3 tests :
+    - Teste la mise à jour du nombre de points disponibles pour le club.
+    - Teste la possibilité d'utiliser tous les points disponibles d'un club.
+    - Lorsque le concours est complet, le lien 'Book Places' est remplacé par le message
+    'This contest is full'
 
 """
