@@ -11,3 +11,7 @@ def load_the_test_database(list_competitions_for_test, list_clubs_for_test):
 def get_message_flash(response, category):
     """ retourne les message d'alert flash """
     return BeautifulSoup(response.data, "lxml").find('div', {'class': 'alert alert-' + category}).text
+
+
+def get_message_welcome_page(response):
+    return BeautifulSoup(response.data, "lxml").find('h1').text.strip()

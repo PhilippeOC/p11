@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, flash, url_for
+from flask import Flask, render_template, request, redirect, flash, url_for, session
 
 from constants import PROPORTION_PLACES_POINTS, PLACES_MAX
 from utilities import loadClubs, loadCompetitions, render_template_booking, render_template_welcome, check_valid_date
@@ -23,6 +23,7 @@ def showSummary():
             flash("Email must be unique.", 'danger')
             return render_template('index.html')
         club = club[0]
+        session['email'] = request.form['email']
         for competition in competitions:
             check_valid_date(competition)
         return render_template_welcome(competitions, club)
@@ -66,9 +67,15 @@ def purchasePlaces():
     flash("You can't redeem more points than available.", 'danger')
     return render_template_booking(competition, club)
 
-# TODO: Add route for points display
+
+@app.route('/listClubsPoints/<email>')
+def listClubsPoints(email):
+    if 'email' not in session:
+        return render_template('index.html', title="GUDLFT Registration")
+    return render_template('listClubs.html', clubs=clubs, email=email, title='List of clubs')
 
 
 @app.route('/logout')
 def logout():
+    session.pop('email', None)
     return redirect(url_for('index'))

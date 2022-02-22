@@ -40,4 +40,11 @@
     - Lorsque la date de la compétition est passée, le lien 'Book Places' est remplacé par
     le message 'Past competition'
     - Lorsque la date de la compétition est à venir, le lien 'Book Places' apparait sur la page
+
+
+*** fichier : test_clubs_list.py
+    2 tests :
+    - Teste l'affichage de la liste des clubs (nom et points) si l'utilisateur est connecté.
+    - Teste qu'un utilisateur non connecté ne puisse pas accèder à la liste des clubs,
+    et qu'il est redirigé vers la page d'accueil.
 """
