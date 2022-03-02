@@ -40,3 +40,10 @@ def check_valid_date(competition):
     today = datetime.now() if ACTUAL_DATE_TODAY else datetime.strptime("2010-04-27 10:00:00", '%Y-%m-%d %H:%M:%S')
     competition_date = datetime.strptime(competition['date'], '%Y-%m-%d %H:%M:%S')
     competition['valid_date'] = today < competition_date
+
+
+def find_one(item, items):
+    """ retourne item si cet item est unique dans items
+    sinon retourne False """
+    found_item = [c for c in items if c['name'] == item]
+    return found_item[0] if len(found_item) == 1 else False

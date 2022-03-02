@@ -70,3 +70,24 @@ def invalid_datas_clubs_for_test():
                             "points": "12"
                         }
                     ]}
+
+
+@pytest.fixture
+def invalid_datas_competitions_for_test():
+    return {"competitions": [
+                    {
+                        "name": "Competition name 1",
+                        "date": "2020-03-27 10:00:00",
+                        "numberOfPlaces": "25"
+                    },
+                    {
+                        "name": "Competition name 1",
+                        "date": "2025-10-22 13:30:00",
+                        "numberOfPlaces": "13"
+                    },
+                    {
+                        "name": "Competition name 3",
+                        "date": "2028-10-22 13:30:00",
+                        "numberOfPlaces": "0"
+                    }
+                ]}

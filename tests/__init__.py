@@ -45,6 +45,26 @@
 *** fichier : test_clubs_list.py
     2 tests :
     - Teste l'affichage de la liste des clubs (nom et points) si l'utilisateur est connecté.
-    - Teste qu'un utilisateur non connecté ne puisse pas accèder à la liste des clubs,
+    - Teste qu'un utilisateur non connecté ne puisse pas accéder à la liste des clubs,
     et qu'il est redirigé vers la page d'accueil.
+
+
+*** fichier : test_booking_problems.py
+    5 tests :
+    - Teste si le message d'alerte 'Something went wrong-please try again' s'affiche
+    si le club n'est pas trouvé lors de la reservation de places.
+    - Teste si le message d'alerte 'Something went wrong-please try again' s'affiche
+    si la compétition n'est pas trouvée lors de la reservation de places.
+    - Teste si le message d'alerte 'Something went wrong-please try again' s'affiche
+    si plusieurs clubs trouvés ont le même nom lors de la reservation de places.
+    - Teste si le message d'alerte 'Something went wrong-please try again' s'affiche
+    si plusieurs compétitions trouvées ont le même nom lors de la reservation de places.
+    - Teste qu'un utilisateur non connecté ne puisse pas accéder à la page des réservations,
+    et qu'il est redirigé vers la page d'accueil.
+
+
+*** fichier : test_purchase_problems.py
+    1 test:
+    - Si l'utilisateur entre une valeur négative dans le champ 'How many places?'
+    le message d'alerte "The number of places must be strictly positive" s'affiche.
 """
