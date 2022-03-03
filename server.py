@@ -1,8 +1,8 @@
 from flask import Flask, render_template, request, redirect, flash, url_for, session
 
 from constants import PROPORTION_PLACES_POINTS, PLACES_MAX
-from utilities import (loadClubs,
-                       loadCompetitions,
+from utilities import (load_clubs,
+                       load_competitions,
                        render_template_booking,
                        render_template_welcome,
                        check_valid_date,
@@ -11,8 +11,8 @@ from utilities import (loadClubs,
 app = Flask(__name__)
 app.secret_key = 'something_special'
 
-competitions = loadCompetitions()
-clubs = loadClubs()
+competitions = load_competitions()
+clubs = load_clubs()
 
 
 @app.route('/')
@@ -21,7 +21,7 @@ def index():
 
 
 @app.route('/showSummary', methods=['POST'])
-def showSummary():
+def show_summary():
     club = [club for club in clubs if club['email'] == request.form['email']]
     if club:
         if len(club) > 1:
@@ -41,38 +41,38 @@ def book(competition, club):
     if 'email' not in session:
         return render_template('index.html', title="GUDLFT Registration")
 
-    foundClub = find_one(club, clubs)
-    foundCompetition = find_one(competition, competitions)
+    found_club = find_one(club, clubs)
+    found_competition = find_one(competition, competitions)
 
-    if foundClub and foundCompetition:
-        return render_template_booking(foundCompetition, foundClub)
+    if found_club and found_competition:
+        return render_template_booking(found_competition, found_club)
 
     flash("Something went wrong-please try again", "danger")
     return render_template_welcome(competitions, club)
 
 
 @app.route('/purchasePlaces', methods=['POST'])
-def purchasePlaces():
+def purchase_places():
     competition = [c for c in competitions if c['name'] == request.form['competition']][0]
     club = [c for c in clubs if c['name'] == request.form['club']][0]
-    placesRequired = int(request.form['places'])
-    numberOfPlaces = int(competition['numberOfPlaces'])
-    if placesRequired <= 0:
+    places_required = int(request.form['places'])
+    number_of_places = int(competition['numberOfPlaces'])
+    if places_required <= 0:
         flash("The number of places must be strictly positive", 'danger')
         return render_template_booking(competition, club)
 
-    if placesRequired > PLACES_MAX:
+    if places_required > PLACES_MAX:
         flash(f"You can't request more than {PLACES_MAX} places.", 'danger')
         return render_template_booking(competition, club)
 
-    if numberOfPlaces <= 0:
+    if number_of_places <= 0:
         return render_template_welcome(competitions, club)
-    numberOfPlacesAvailable = numberOfPlaces-placesRequired
-    pointsAvailable = int(club['points']) - placesRequired * PROPORTION_PLACES_POINTS
+    number_of_places_available = number_of_places-places_required
+    points_available = int(club['points']) - places_required * PROPORTION_PLACES_POINTS
 
-    if numberOfPlacesAvailable >= 0 and pointsAvailable >= 0:
-        competition['numberOfPlaces'] = numberOfPlacesAvailable
-        club['points'] = pointsAvailable
+    if number_of_places_available >= 0 and points_available >= 0:
+        competition['numberOfPlaces'] = number_of_places_available
+        club['points'] = points_available
         flash('Great-booking complete!', 'success')
         return render_template_welcome(competitions, club)
 
@@ -81,7 +81,7 @@ def purchasePlaces():
 
 
 @app.route('/listClubsPoints/<email>')
-def listClubsPoints(email):
+def list_clubs_points(email):
     if 'email' not in session:
         return render_template('index.html', title="GUDLFT Registration")
     return render_template('listClubs.html', clubs=clubs, email=email, title='List of clubs')

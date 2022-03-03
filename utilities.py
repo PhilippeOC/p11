@@ -5,13 +5,13 @@ from datetime import datetime
 from constants import ACTUAL_DATE_TODAY
 
 
-def loadClubs():
+def load_clubs():
     with open('clubs.json') as c:
         listOfClubs = json.load(c)['clubs']
         return listOfClubs
 
 
-def loadCompetitions():
+def load_competitions():
     with open('competitions.json') as comps:
         listOfCompetitions = json.load(comps)['competitions']
         return listOfCompetitions
