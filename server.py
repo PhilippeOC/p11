@@ -17,7 +17,7 @@ clubs = load_clubs()
 
 @app.route('/')
 def index():
-    return render_template('index.html', title="GUDLFT Registration")
+    return render_template('index.html', clubs=clubs, title="GUDLFT Registration")
 
 
 @app.route('/showSummary', methods=['POST'])
@@ -26,20 +26,20 @@ def show_summary():
     if club:
         if len(club) > 1:
             flash("Email must be unique.", 'danger')
-            return render_template('index.html')
+            return render_template('index.html', clubs=clubs, title="GUDLFT Registration")
         club = club[0]
         session['email'] = request.form['email']
         for competition in competitions:
             check_valid_date(competition)
         return render_template_welcome(competitions, club)
     flash("Sorry, that email wasn't found.", "danger")
-    return render_template('index.html', title="GUDLFT Registration")
+    return render_template('index.html', clubs=clubs, title="GUDLFT Registration")
 
 
 @app.route('/book/<competition>/<club>')
 def book(competition, club):
     if 'email' not in session:
-        return render_template('index.html', title="GUDLFT Registration")
+        return render_template('index.html', clubs=clubs, title="GUDLFT Registration")
 
     found_club = find_one(club, clubs)
     found_competition = find_one(competition, competitions)
@@ -78,13 +78,6 @@ def purchase_places():
 
     flash("You can't redeem more points than available.", 'danger')
     return render_template_booking(competition, club)
-
-
-@app.route('/listClubsPoints/<email>')
-def list_clubs_points(email):
-    if 'email' not in session:
-        return render_template('index.html', title="GUDLFT Registration")
-    return render_template('listClubs.html', clubs=clubs, email=email, title='List of clubs')
 
 
 @app.route('/logout')

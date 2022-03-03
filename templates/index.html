@@ -8,5 +8,16 @@
             <input type="email" name="email" id=""/>
             <button type="submit">Enter</button>
         </form>
+        <hr />
+        <h2> List of clubs </h2>
+        <div class="col d-flex justify-content-start"> 
+            <ul>
+                {% for club in clubs %}
+                    <li>
+                        Club: {{club['name']}} --- Points: {{club['points']}}<br />
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
     </div>
 {% endblock content %}

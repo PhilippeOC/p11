@@ -43,10 +43,8 @@
 
 
 *** fichier : test_clubs_list.py
-    2 tests :
-    - Teste l'affichage de la liste des clubs (nom et points) si l'utilisateur est connecté.
-    - Teste qu'un utilisateur non connecté ne puisse pas accéder à la liste des clubs,
-    et qu'il est redirigé vers la page d'accueil.
+    1 test :
+    - Teste l'affichage de la liste des clubs (nom et points) sur la page d'accueil du site.
 
 
 *** fichier : test_booking_problems.py
