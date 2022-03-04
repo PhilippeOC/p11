@@ -15,12 +15,12 @@ def list_clubs_for_test():
                         {
                             "name": "club name1",
                             "email": "club1@club.com",
-                            "points": "13"
+                            "points": "30"
                         },
                         {
                             "name": "club name2",
                             "email": "club2@club.com",
-                            "points": "4"
+                            "points": "12"
                         },
                         {
                             "name": "club name3",

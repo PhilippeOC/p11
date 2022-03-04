@@ -10,7 +10,7 @@ def test_point_updates(client, list_competitions_for_test, list_clubs_for_test):
     response = client.post('/purchasePlaces', data={'competition': "Competition name 1",
                                                     'club': "club name1",
                                                     'places': PLACES_REQUESTED})
-    assert get_points_available(response) == '7'
+    assert get_points_available(response) == '12'
 
 
 def test_point_updates_equal_zero(client, list_competitions_for_test, list_clubs_for_test):
