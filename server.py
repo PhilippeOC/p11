@@ -17,11 +17,14 @@ clubs = load_clubs()
 
 @app.route('/')
 def index():
+    """ page d'accueil du site """
     return render_template('index.html', clubs=clubs, title="GUDLFT Registration")
 
 
 @app.route('/showSummary', methods=['POST'])
 def show_summary():
+    """ affiche l'email de l'utilisateur connecté, son nombre de point disponible,
+    la liste des compétitions, les liens de réservation"""
     club = [club for club in clubs if club['email'] == request.form['email']]
     if club:
         if len(club) > 1:
@@ -38,6 +41,7 @@ def show_summary():
 
 @app.route('/book/<competition>/<club>')
 def book(competition, club):
+    """ contrôle des réservations (autorisation, existence du club et de la compétition)"""
     if 'email' not in session:
         return render_template('index.html', clubs=clubs, title="GUDLFT Registration")
 
@@ -53,6 +57,7 @@ def book(competition, club):
 
 @app.route('/purchasePlaces', methods=['POST'])
 def purchase_places():
+    """ échange de points en places """
     competition = [c for c in competitions if c['name'] == request.form['competition']][0]
     club = [c for c in clubs if c['name'] == request.form['club']][0]
     places_required = int(request.form['places'])
