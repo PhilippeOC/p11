@@ -1,0 +1,2 @@
+[run]
+omit = tests/*, locust_update_points.py, locust_competitions_list.py
